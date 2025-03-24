@@ -1,23 +1,23 @@
-#define F_CPU 16000000L
+#define F_CPU 16000000
 #include <avr/io.h>
 #include <util/delay.h>
 int main(void) 
 {   
     //ENTRADAS 
-	DDRB &= ~(1<<0);
 	DDRB &= ~(1<<1);
+	DDRB &= ~(1<<2);
 	
-    PORTB |= (1<<0);
     PORTB |= (1<<1);
+    PORTB |= (1<<2);
     
 	// SAÍDAS
-	DDRD |= (1<<5);
-	DDRD |= (1<<6); 
-	DDRD |= (1<<7);
+	DDRB |= (1<<3);
+	DDRB |= (1<<4); 
+	DDRB |= (1<<5);
 	
-	PORTD &= ~(1<<5);
-	PORTD &= ~(1<<6);
-	PORTD &= ~(1<<7);
+	PORTB &= ~(1<<3);
+	PORTB &= ~(1<<4);
+	PORTB &= ~(1<<5);
 	
 	int estado = 0;
 	int tempo = 0;
@@ -25,19 +25,19 @@ int main(void)
     {
 		if (estado == 0)
 		{
-			PORTD &= ~(1<<5);
-			PORTD &= ~(1<<6);
-			PORTD &= ~(1<<7);
+			PORTB &= ~(1<<3);
+			PORTB &= ~(1<<4);
+			PORTB &= ~(1<<5);
 			
-			if (!( PINB & (1<<0)))
+			if (!( PINB & (2<<1)))
 			{
 				estado = 1;
 			}
 		}
 		if (estado ==1)
 		{
-			PORTD |= (1<<5);
-			PORTD |= (1<<6);
+			PORTB |= (1<<3);
+			PORTB |= (1<<4);
 			tempo = 5000;
 			estado = 2;
 		}
@@ -52,8 +52,8 @@ int main(void)
 		}
 		if (estado == 3)
 		{
-			PORTD &= ~(1<<6);
-			PORTD |= (1<<7);
+			PORTB &= ~(1<<4);
+			PORTB |= (1<<5);
 			estado = 4;
 		}
 		if (estado == 4)
